@@ -1,0 +1,5 @@
+Pointers, Strings, Arrays, and String Arrays in C
+
+
+int x = 5;
+int *number = x;
