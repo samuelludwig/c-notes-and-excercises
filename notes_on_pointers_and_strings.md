@@ -1,13 +1,13 @@
 # Pointers, Strings, Arrays, and String Arrays in C
 ***
 
-
 ## Pointers 
 
 ```C
 int x = 5;
 ```
 - assume that the variable x is stored in memory address 1004
+
 - so, the value of 5 is currently stored in memory address 1004
 ***
 
@@ -15,6 +15,7 @@ int x = 5;
 int *num;
 ```
 - creates a pointer to an integer, called num, explicitly telling the computer "this variable will hold an address to an integer"
+
 - lets assume that the value of num is to be stored in memory address 12008 
 ***
 
@@ -24,8 +25,11 @@ int *num;
 num = &x;
 ```
 - sets the value of num to the address of x
+
 - the address of x is 1004,
+
 - so, the value stored in num is 1004,
+
 - *so,* the value stored in the address of num- 12008, is **1004**
 ***
 
@@ -40,6 +44,8 @@ num = &x;
 - if I reference '*num',
     I am referencing the value that num is pointing to, which is the value at x's address, **5**
 
+- ^this last one in particular^ is often referred to as **dereferencing** the pointer, i.e. "getting the value of what I'm pointing to"
+
 ***
 ***
 
@@ -51,6 +57,8 @@ num = &x;
 char chararray[64];
 ```
 - ^this^ initializes an array of characters, 64 spaces wide, each element is currently just garbage data until changed
+ 
+- more explicitly, this tells the computer "clear out a block of memory 64 places wide, I'm going to put an array there, and I will use `chararray` to refer to the address of the first element in that array"
 
 - assume that the first byte of the character array is located at memory address 4000 
 
@@ -71,10 +79,97 @@ char chararray[64];
 
 - more plainly: in this case, whenever your computer sees "`chararray`", it will immediately translate it to "memory address 4000"
 
-- ^this^ is actually true for any kind of variable name, whenever you reference `my_variable_x`, your computer will immediately translate it to "the value at memory address `address_of_my_variable_x`"
+- ^this idea^ is true for any kind of variable name, whenever you reference `my_variable_x`, your computer will immediately translate it to "the value at memory address `address_of_my_variable_x`"
 
 ***
 
 ***
 
-## String Arrays
+## String Arrays and Pointer Arrays
+***
+
+- we know how to make a string, and that a string is just a character array
+
+- we know that the beginning of an array can be referenced by its address, just like any other variable
+
+- we know how to make a pointer variable, and how to use it to reference the addresses of other variables
+
+- the same rules and procedures of referencing the addresses of other variables apply to referencing other entities like arrays
+
+- for example:
+
+```C
+char my_chararray[64];
+char *my_pointer;
+```
+
+- ^this^ initializes an empty array of characters `my_chararray` , and declares a pointer variable `my_pointer`, that will point to a character
+
+```C
+char my_pointer = &my_chararray;
+```
+
+- ^this^ stores the address of `my_chararray`'s first character into `my_pointer`
+
+```C
+char my_pointer = &my_chararray[4];
+```
+
+- ^this^ stores the address of `my_chararray`'s fifth character into `my_pointer`, in other words, it stores the **address of `my_chararray`'s first element, with an offset of four spaces**
+
+***
+
+**SO**
+
+- the next step is understanding how to create an array of strings
+
+- an array of strings can be made in one of two ways, by creating a multidimensional array, or by creating an array of pointers, each one pointing to a different chararray
+
+- in the interest of staying on topic, we will focus on the latter option
+
+***
+
+**NOW**
+
+```C
+char mystring[64];
+```
+
+- creates an empty array of characters, 64 spaces wide, assume that the address of the first element is at memory address **4000**
+
+- we can use this to store one string
+
+- we can reference `&mystring` to get the address of this string (aka, the first element of the charatcer array)
+
+
+```C
+char *mystringarray[8];
+```
+- creates an empty array of **character pointers**, 8 spaces wide, assume the first space of this array is located at memory address **7004**
+
+- in each space of this array, we can store a pointer to another character **or character array**
+
+- this is because every array can be referenced by the address of its first element
+
+```C
+mystringarray[0] = &mystring;
+```
+
+- sets the first element of the array of pointers, `mystringarray`, to the value of the address of `mystring`'s first element, which is **4000**
+
+***
+
+**SO**
+
+- if I reference '`&mystringarray[0]`', I am referencing the value of `mystringarray`'s address, which is **7004**
+
+- if I reference '`mystringarray[0]`', I am referencing the value stored in `mystringarray`'s address, which is the value of `mystring`'s address, which is **4000**
+
+- if I reference '`*mystringarray[0]`', I am referencing the value stored at the address I am pointing to, which is **the first element in the character array `mystring`**
+
+***
+
+***
+
+
+
