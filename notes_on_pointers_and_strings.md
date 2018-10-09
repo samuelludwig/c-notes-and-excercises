@@ -123,7 +123,7 @@ char my_pointer = &my_chararray[4];
 
 - the next step is understanding how to create an array of strings
 
-- an array of strings can be made in one of two ways, by creating a multidimensional array, or by creating an array of pointers, each one pointing to a different chararray
+- an array of strings can be made in one of two ways, either by creating a multidimensional array, or by creating an array of pointers, each one pointing to a different chararray
 
 - in the interest of staying on topic, we will focus on the latter option
 
@@ -139,7 +139,7 @@ char mystring[64];
 
 - we can use this to store one string
 
-- we can reference `&mystring` to get the address of this string (aka, the first element of the charatcer array)
+- we can reference `&mystring` to get the address of this string (the first element of the character array)
 
 
 ```C
@@ -161,9 +161,9 @@ mystringarray[0] = &mystring;
 
 **SO**
 
-- if I reference '`&mystringarray[0]`', I am referencing the value of `mystringarray`'s address, which is **7004**
-
 - if I reference '`mystringarray[0]`', I am referencing the value stored in `mystringarray`'s address, which is the value of `mystring`'s address, which is **4000**
+
+- if I reference '`&mystringarray[0]`', I am referencing the value of `mystringarray`'s address, which is **7004**
 
 - if I reference '`*mystringarray[0]`', I am referencing the value stored at the address I am pointing to, which is **the first element in the character array `mystring`**
 
