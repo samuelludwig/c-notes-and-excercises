@@ -6,7 +6,7 @@
 ```C
 int x = 5;
 ```
-- assume that the variable x is stored in memory address 1004
+- assume that the variable `x` is stored in memory address 1004
 
 - so, the value of 5 is currently stored in memory address 1004
 ***
@@ -14,9 +14,9 @@ int x = 5;
 ```C
 int *num;
 ```
-- creates a pointer to an integer, called num, explicitly telling the computer "this variable will hold an address to an integer"
+- creates a pointer to an integer, called `num`, explicitly telling the computer "this variable will hold an address to an integer"
 
-- lets assume that the value of num is to be stored in memory address 12008 
+- lets assume that the value of `num` is to be stored in memory address 12008 
 ***
 
 **NOW**
@@ -24,25 +24,25 @@ int *num;
 ```C
 num = &x;
 ```
-- sets the value of num to the address of x
+- sets the value of `num` to the address of `x`
 
-- the address of x is 1004,
+- the address of `x` is 1004,
 
-- so, the value stored in num is 1004,
+- so, the value stored in `num` is 1004,
 
-- *so,* the value stored in the address of num- 12008, is **1004**
+- *so,* the value stored in the address of `num`; 12008, is **1004**
 ***
 
 **SO**
 
-- if I reference 'num',
-    I am referencing the value inside of num, which is x's address, **1004**
+- if I reference '`num`',
+    I am referencing the value inside of `num`, which is `x`'s address, **1004**
 
-- if I reference '&num',
-    I am referencing the address of 'num', which is **12008**
+- if I reference '`&num`',
+    I am referencing the address of `num`, which is **12008**
 
-- if I reference '*num',
-    I am referencing the value that num is pointing to, which is the value at x's address, **5**
+- if I reference '`*num`',
+    I am referencing the value that `num` is pointing to, which is the value at `x`'s address, **5**
 
 - ^this last one in particular^ is often referred to as **dereferencing** the pointer, i.e. "getting the value of what I'm pointing to"
 
@@ -171,5 +171,73 @@ mystringarray[0] = &mystring;
 
 ***
 
+## **Pointers to *Pointers to Pointers, Oh My!
 
+```C
+int x = 5;
+```
+- creates variable `x` and sets it equal to 5, assume `x`'s address is 5000
+
+- the value of 5 is now stored in memory address 5000
+
+```C
+int *mypointer = &x;
+```
+- creates a pointer variable `mypointer` and sets it equal to `x`'s address, 5000, assume `mypointer`'s address is 7000
+
+- the value of `x`'s address in memory, 5000, is now stored in the address of `mypointer`, 7000
+***
+
+**SO**
+- if I reference '`mypointer`',
+I am referencing the value stored in `mypointer`'s address, which is `x`'s address, **5000**
+
+- if I reference '`&mypointer`',
+I am referencing the value of `mypointer`'s address, which is **7000** 
+
+- if I reference '`*mypointer`',
+I am referencing the value that `mypointer` is pointing to, which is the value at `x`'s address, **5**
+***
+**NOW**
+
+```C
+int **doublepointer = &mypointer;
+```
+
+- creates a new pointer variable called `doublepointer`, and sets it equal to the address of `mypointer`, 7000
+
+- assume the address of `doublepointer` is 14000
+
+- the value of `mypointer`'s address, 7000, is now stored in the address of `doublepointer`, 14000
+
+- the two asterisks "**", in front of the variable indicate to the computer that "this variable is going to be a pointer to another pointer"
+***
+
+**SO**
+
+- if I reference '`doublepointer`',
+I am referencing the value stored in `doublepointer`'s address, which is `mypointer`'s address, **7000**
+
+- if I reference '`&doublepointer`',
+I am referencing the value of `doublepointer`'s address, which is **14000** 
+
+- if I reference '`*doublepointer`',
+I am referencing the value that `doublepointer` is pointing to, which is the value stored at `mypointer`'s address, **5000**
+
+- if I reference '`**doublepointer`',
+I am referencing the value that `mypointer` is pointing to, which is the value stored in `x`'s address, **5**
+
+***
+**NOTE**
+
+- when I reference something using two asterisks, I am telling the computer "look at this thing that I am pointing to, now give me the value that *that* thing is pointing to"
+
+- ^this^ is something that we have done before, albeit using different syntax, when I would reference something like `*pointarray[2]`, I would be telling the computer "see this array of pointers that I am looking at, now look at the address held in the third element, give me what that points to"
+
+***
+***
+
+## Further Reading
+
+- for further information on pointers and their usecases, see link: http://www.eskimo.com/~scs/cclass/int/sx8.html 
 
