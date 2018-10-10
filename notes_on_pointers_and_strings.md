@@ -106,7 +106,7 @@ char *my_pointer;
 - ^this^ initializes an empty array of characters `my_chararray` , and declares a pointer variable `my_pointer`, that will point to a character
 
 ```C
-char my_pointer = &my_chararray;
+char my_pointer = &my_chararray[0];
 ```
 
 - ^this^ stores the address of `my_chararray`'s first character into `my_pointer`
@@ -152,7 +152,7 @@ char *mystringarray[8];
 - this is because every array can be referenced by the address of its first element
 
 ```C
-mystringarray[0] = &mystring;
+mystringarray[0] = mystring;
 ```
 
 - sets the first element of the array of pointers, `mystringarray`, to the value of the address of `mystring`'s first element, which is **4000**
