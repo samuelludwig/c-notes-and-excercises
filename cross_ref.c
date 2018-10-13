@@ -17,54 +17,58 @@ int main(int argc, char const *argv[])
 }
 
 
-int getline(char string[], int lim)
-{
-    int c, i;
+// int getline(char string[], int lim)
+// {
+//     int c, i;
 
-    for (i = 0; ((i < lim-1) && ((c = gethchar()) != EOF) && (c != '\n')); i++) {
-        string[i] = c;
-    }
+//     for (i = 0; ((i < lim-1) && ((c = gethchar()) != EOF) && (c != '\n')); i++) {
+//         string[i] = c;
+//     }
 
-    if (c == '\n') {
-        string[i] = c;
-        i++;
-    }
-    string[i] = '\0';
-    return i;
-}
+//     if (c == '\n') {
+//         string[i] = c;
+//         i++;
+//     }
+//     string[i] = '\0';
+//     return i;
+// }
 
 
-void copy(char to[], char from[]) 
-{
-    int i = 0;
+// void copy(char to[], char from[]) 
+// {
+//     int i = 0;
 
-    while((to[i] = from[i]) != '\0') {
-        i++;
-    }
-}
+//     while((to[i] = from[i]) != '\0') {
+//         i++;
+//     }
+// }
 
 void define_noise(char *string[])
 {
     printf("Define noise words, capitalization is irrelevant (input as alphanumeric words separated by blanks):\n");
-    int wordcounter = 0;
+    
     int c = ' ';
-
+    int wordcounter = 0;
     while (c != EOF) {
-        char word[64];
-        if(isalnum(c)) {
-            int i;
-            for (i = 0; isalnum(c); i++) {
-                c = getchar();
+        if (isalnum(c)) {
+            char word[MAXSIZE];
+            for (int i = 0; isalnum(c); i++) {
                 word[i] = c;
+                c = getchar();
+                if (!isalnum(c)) {
+                    word[i+1] = '\0';
+                }
             }
-            word[i+1] = '\0';
-            copy(*string[wordcounter], word);
-            wordcounter++;
+            //
+            // then add word to string[] of noise words
+            *string[wordcounter] = *word;
+            //
+        } else {
+            c = getchar();
         }
-        free(word);
     }
 
-    printf("Words banned: %d", (sizeof(string)/sizeof(string[0])));
+    printf("first word banned is : %s", *string[0]);
 }
 
 void traverse_file()
@@ -72,15 +76,20 @@ void traverse_file()
 
 }
 
-bool is_noise(char *string, char *noise_words[])
-{
-    for (int i = 0; i < sizeof(noise_words); i++) {
-        if (strcmp(*string, *noise_words[i])) {
-            return true;
-        }
-    }
+// bool is_noise(char *string, char *noise_words[])
+// {
+//     for (int i = 0; i < sizeof(noise_words); i++) {
+//         if (strcmp(*string, *noise_words[i])) {
+//             return true;
+//         }
+//     }
 
-    return false;
+//     return false;
+// }
+
+void to_char_array(char input[]) 
+{
+    
 }
 
 // struct word {
