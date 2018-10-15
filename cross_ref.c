@@ -11,7 +11,7 @@ void define_noise(char *string[]);
 int main(int argc, char const *argv[])
 {
     char *word_array[MAXSIZE];
-    char *noise_words[64];
+    char *noise_words[1];
     define_noise(noise_words);
     return 0;
 }
@@ -61,7 +61,7 @@ void define_noise(char *string[])
             }
             //
             // then add word to string[] of noise words
-            *string[wordcounter] = *word;
+            string[wordcounter] = *&word;
             //
         } else {
             c = getchar();
