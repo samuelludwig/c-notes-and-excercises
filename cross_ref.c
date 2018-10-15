@@ -11,7 +11,7 @@ void define_noise(char *string[]);
 int main(int argc, char const *argv[])
 {
     char *word_array[MAXSIZE];
-    char *noise_words[1];
+    char *noise_words[MAXSIZE];
     define_noise(noise_words);
     return 0;
 }
@@ -61,14 +61,16 @@ void define_noise(char *string[])
             }
             //
             // then add word to string[] of noise words
-            string[wordcounter] = *&word;
+            string[wordcounter] = &word[0];
+            wordcounter++;
             //
         } else {
             c = getchar();
         }
     }
 
-    printf("first word banned is : %s", *string[0]);
+    printf("first word banned is : %s\n", *&string[0]);
+    printf("word count: %d", wordcounter);
 }
 
 void traverse_file()
