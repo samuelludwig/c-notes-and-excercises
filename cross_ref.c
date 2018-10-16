@@ -6,12 +6,12 @@
 
 #define MAXSIZE 1000
 void copy(char to[], char from[]);
-void define_noise(char *string[]);
+void define_noise(char string[MAXSIZE][MAXSIZE]);
 
 int main(int argc, char const *argv[])
 {
     char *word_array[MAXSIZE];
-    char *noise_words[MAXSIZE];
+    char noise_words[MAXSIZE][MAXSIZE];
     define_noise(noise_words);
     return 0;
 }
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[])
 //     }
 // }
 
-void define_noise(char *string[])
+void define_noise(char string[MAXSIZE][MAXSIZE])
 {
     printf("Define noise words, capitalization is irrelevant (input as alphanumeric words separated by blanks):\n");
     
@@ -61,7 +61,11 @@ void define_noise(char *string[])
             }
             //
             // then add word to string[] of noise words
-            string[wordcounter] = &word[0];
+            int i;
+            for (i = 0; word[i] != '\0'; i++){
+                string[wordcounter][i] = word[i];
+            }
+            string[wordcounter][i+1] = '\0';
             wordcounter++;
             //
         } else {
