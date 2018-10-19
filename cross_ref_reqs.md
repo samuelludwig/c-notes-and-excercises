@@ -21,4 +21,4 @@
 
 - array to store pointers to every word object
   - array will be sorted alphabetically by word property
-                - array will be a binary tree
+    - array will be a binary tree
