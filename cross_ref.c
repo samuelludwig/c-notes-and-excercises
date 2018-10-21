@@ -26,33 +26,6 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-
-// int getline(char string[], int lim)
-// {
-//     int c, i;
-
-//     for (i = 0; ((i < lim-1) && ((c = gethchar()) != EOF) && (c != '\n')); i++) {
-//         string[i] = c;
-//     }
-
-//     if (c == '\n') {
-//         string[i] = c;
-//         i++;
-//     }
-//     string[i] = '\0';
-//     return i;
-// }
-
-
-// void copy(char to[], char from[]) 
-// {
-//     int i = 0;
-
-//     while((to[i] = from[i]) != '\0') {
-//         i++;
-//     }
-// }
-
 void define_noise(char string[][MAXSIZE])
 {
     printf("Define noise words, capitalization is irrelevant (input as alphanumeric words separated by blanks):\n");
