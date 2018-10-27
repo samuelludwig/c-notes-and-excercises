@@ -10,11 +10,12 @@ void define_noise(char string[][MAXSIZE]);
 char *build_word(char initialchar);
 bool is_noise(char string[], char noise_array[][MAXSIZE]);
 
-typedef struct Word {
-    char this_word[MAXSIZE];    // a chararray (string)- the word to be tracked 
+struct word {
+    char *this_word;    // a chararray (string)- the word to be tracked 
     int lines_found[MAXSIZE];  // an array of integers indicating lines found
-    struct word *next_word;
-} Word;
+    struct word *lword;
+    struct word *rword;
+};
 
 int main(int argc, char const *argv[])
 {
@@ -22,7 +23,7 @@ int main(int argc, char const *argv[])
     char noise_words[MAXSIZE][MAXSIZE];
     define_noise(noise_words);
 
-    Word word_bank[MAXSIZE];
+    struct word word_bank[MAXSIZE];
     return 0;
 }
 
@@ -48,6 +49,11 @@ void define_noise(char string[][MAXSIZE])
     }
 
     printf("Restrictions defined...\n");
+}
+
+void pt_define_noise(char *string[]) // input comes in through command line, ends up in an array
+{
+
 }
 
 void traverse_file()

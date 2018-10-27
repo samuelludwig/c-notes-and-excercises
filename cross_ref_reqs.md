@@ -22,3 +22,23 @@
 - array to store pointers to every word object
   - array will be sorted alphabetically by word property
     - array will be a binary tree
+
+***
+***
+***
+
+## define_noise alg
+
+- input comes in through console as words separated by spaces
+
+- each word entered will be a "noise word"
+
+- a pointer in memory will be made to each word entered
+
+- each pointer will be stored in a pointer array
+
+- the array to put it into will be provided when function is called
+
+- return type will be int, will return 0 if all works properly, else it will return an error code
+
+- use a separate calling function to test for error
