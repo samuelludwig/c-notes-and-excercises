@@ -9,7 +9,7 @@
 
 void copy(char to[], char from[]);
 void pt_define_noise(char *string[]);
-char *build_word(char initialchar);
+void build_word(char* pointer_to_word, char initialchar);
 bool is_noise(char string[], char noise_array[][MAXSIZE]);
 
 struct word {
@@ -24,35 +24,35 @@ int main(int argc, char const *argv[])
     char *word_array[MAXSIZE];
     char *noise_words[MAXSIZE];
     pt_define_noise(noise_words);
-    printf("Word banned: %s", noise_words[0]);
+    printf("Word banned: %s", noise_words[2]);
 
     // struct word word_bank[MAXSIZE];
     return 0;
 }
 
-void define_noise(char string[][MAXSIZE])
-{
-    printf("Define noise words, capitalization is irrelevant (input as alphanumeric words separated by blanks):\n");
+// void define_noise(char string[][MAXSIZE])
+// {
+//     printf("Define noise words, capitalization is irrelevant (input as alphanumeric words separated by blanks):\n");
     
-    int c = ' ';
-    int wordcounter = 0;
-    while (c != EOF) {
-        if (isalnum(c)) {
-            char *word = build_word(c);
+//     int c = ' ';
+//     int wordcounter = 0;
+//     while (c != EOF) {
+//         if (isalnum(c)) {
+//             char *word = build_word(c);
 
-            int i;
-            for (i = 0; word[i] != '\0'; i++){
-                string[wordcounter][i] = word[i];
-            }
-            string[wordcounter][i+1] = '\0';
-            wordcounter++;
-        } else {
-            c = getchar();
-        }
-    }
+//             int i;
+//             for (i = 0; word[i] != '\0'; i++){
+//                 string[wordcounter][i] = word[i];
+//             }
+//             string[wordcounter][i+1] = '\0';
+//             wordcounter++;
+//         } else {
+//             c = getchar();
+//         }
+//     }
 
-    printf("Restrictions defined...\n");
-}
+//     printf("Restrictions defined...\n");
+// }
 
 void pt_define_noise(char *string[]) // input comes in through command line, ends up in an array of pointers to strings
 {
@@ -67,31 +67,32 @@ void pt_define_noise(char *string[]) // input comes in through command line, end
 
     while (c != EOF) {
         if (isalnum(c)) {
-            char *spaceptr = build_word(c);
+            char spaceptr[MAXSIZE];
+            build_word(spaceptr, c);
             strcpy_s(ptr, word_size, spaceptr);
             string[banned_count] = ptr;
-            ptr++;
+            ptr += word_size;
             banned_count++;
         }
         c = getchar();
     }    
 }
 
-void traverse_file()
-{
-    int linenum = 0;
+// void traverse_file()
+// {
+//     int linenum = 0;
 
-    int c = ' ';
-    while(c != EOF){
-        if (c == '\n') {
-            linenum++;
-        }
+//     int c = ' ';
+//     while(c != EOF){
+//         if (c == '\n') {
+//             linenum++;
+//         }
   
-        if (isalnum(c)) {
-            char *word = build_word(c);
-        }    
-    }
-}
+//         if (isalnum(c)) {
+//             char *word = build_word(c);
+//         }    
+//     }
+// }
 
 // bool is_noise(char *string, char noise_words[][MAXSIZE])
 // {
@@ -105,15 +106,13 @@ void traverse_file()
 
 /* takes in the first character of a string, builds a chararray until it hits a blank, appends a null char,
  returns a pointer to a chararray containing the word */
-char *build_word(char initialchar) 
+void build_word(char ptr_to_word[MAXSIZE], char initialchar) 
 {
-    char word[MAXSIZE];
     for (int i = 0; isalnum(initialchar); i++) {
-        word[i] = initialchar;
+        ptr_to_word[i] = initialchar;
         initialchar = getchar();
         if (!isalnum(initialchar)) {
-            word[i+1] = '\0';
+            ptr_to_word[i+1] = '\0';
         }
     }
-    return word;
 }

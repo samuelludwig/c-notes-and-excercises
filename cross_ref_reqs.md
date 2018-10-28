@@ -31,8 +31,10 @@
 
 - input comes in through console as words separated by spaces
   - iterate through input one character at a time
-    - a word begins on the alphanumeric character
+    - a word begins on the first alphanumeric character
     - the word ends when a non-alnum char is reached
+    - from the first letter to the last, the word will be built character by character into a chararray
+    - the chararray will be terminated with a `'\0'`
 
 - each word entered will be a "noise word"
 
@@ -41,7 +43,3 @@
 - each pointer will be stored in a pointer array
 
 - the array to put it into will be provided when function is called
-
-- return type will be int, will return 0 if all works properly, else it will return an error code
-
-- use a separate calling function to test for error
