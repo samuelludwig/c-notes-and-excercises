@@ -30,6 +30,9 @@
 ## define_noise alg
 
 - input comes in through console as words separated by spaces
+  - iterate through input one character at a time
+    - a word begins on the alphanumeric character
+    - the word ends when a non-alnum char is reached
 
 - each word entered will be a "noise word"
 
