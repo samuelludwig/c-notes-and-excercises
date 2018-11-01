@@ -19,11 +19,19 @@ struct word {
     struct word *rword; // pointers to the left and right children of this node
 };
 
-/* creates a brand new word struct, will be called if */
+/*  
+creates a brand new word struct, will be called if a non-noise word is 
+processed in traverse_file function that doesn't exist inside the binary tree
+*/
 struct word *register_new_word(char *string) 
 {
-    struct word *newword = malloc(sizeof(struct word));
-    strcpy(newword->this_word, string);
+    struct word temp;
+
+    strcpy(temp.this_word, string);
+    temp.lines_found[0];
+    temp.lword = NULL;
+    temp.rword = NULL;
+    return &temp;
 }
 
 int main(int argc, char const *argv[])
@@ -65,21 +73,22 @@ void pt_define_noise(char *string[]) // input comes in through command line, end
     }    
 }
 
-// void traverse_file()
-// {
-//     int linenum = 0;
+void traverse_file()
+{
+    int linenum = 0;
 
-//     int c = ' ';
-//     while(c != EOF){
-//         if (c == '\n') {
-//             linenum++;
-//         }
+    int c = ' ';
+    while(c != EOF){
+        if (c == '\n') {
+            linenum++;
+        }
   
-//         if (isalnum(c)) {
-//             char *word = build_word(c);
-//         }    
-//     }
-// }
+        if (isalnum(c)) {
+            char *word;
+            build_word(word, c);
+        }    
+    }
+}
 
 bool is_noise(char *string, char *noise_words[])
 {
@@ -97,8 +106,10 @@ bool is_noise(char *string, char *noise_words[])
     return false;
 }
 
-/* takes in the first character of a string, builds a chararray until it hits a blank, appends a null char,
- returns a pointer to a chararray containing the word */
+/* 
+takes in the first character of a string, builds a chararray until it hits a blank, appends a null char,
+returns a pointer to a chararray containing the word 
+*/
 void build_word(char ptr_to_word[MAXSIZE], char initialchar) 
 {
     for (int i = 0; isalnum(initialchar); i++) {
