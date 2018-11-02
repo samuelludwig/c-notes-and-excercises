@@ -12,26 +12,29 @@ void pt_define_noise(char *string[]);
 void build_word(char* pointer_to_word, char initialchar);
 bool is_noise(char *string, char *noise_array[]);
 
-struct word {
-    char *this_word;    // a chararray (string)- the word to be tracked 
+struct tnode {
+    char *word;    // a chararray (string)- the word to be tracked 
     int lines_found[MAXSIZE];  // an array of integers indicating lines found
-    struct word *lword;
-    struct word *rword; // pointers to the left and right children of this node
+    struct tnode *ltnode;
+    struct tnode *rtnode; // pointers to the left and right children of this node
 };
 
 /*  
 creates a brand new word struct, will be called if a non-noise word is 
 processed in traverse_file function that doesn't exist inside the binary tree
 */
-struct word *register_new_word(char *string) 
+struct tnode *register_word(struct tnode *ptr, char *string, int linenum) 
 {
-    struct word temp;
+    int cond;
 
-    strcpy(temp.this_word, string);
-    temp.lines_found[0];
-    temp.lword = NULL;
-    temp.rword = NULL;
-    return &temp;
+    if (ptr == NULL) {    /* a new word has arrived */
+        ptr = talloc();   /* make a new node */
+        ptr->word = strdup(string);
+
+        ptr->lines_found[0/*next empty entry*/] = linenum; 
+        
+        ptr->ltnode = ptr->rtnode = NULL;
+    }
 }
 
 int main(int argc, char const *argv[])
@@ -73,7 +76,7 @@ void pt_define_noise(char *string[]) // input comes in through command line, end
     }    
 }
 
-void traverse_file()
+void traverse_file(char *noise_words[])
 {
     int linenum = 0;
 
@@ -86,7 +89,15 @@ void traverse_file()
         if (isalnum(c)) {
             char *word;
             build_word(word, c);
-        }    
+
+            if (!is_noise(word, noise_words)) {
+                // test to see if word is in tree
+                // if so, add linenum to word.lines_appeared[]
+                // else, create a new node in the tree
+            }
+        }  
+
+        c = getchar();  
     }
 }
 
