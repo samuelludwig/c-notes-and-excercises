@@ -101,7 +101,7 @@ int main(int argc, char const *argv[])
         printf("%s\n", noise_words[i]);
     }
 
-    printf("Input file stream:\n");
+    printf("Input file stream, hit enter twice to start a newline:\n");
     struct tnode *root = traverse_file(noise_words);
 
     print_word_tree(root);
