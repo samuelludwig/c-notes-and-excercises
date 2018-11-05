@@ -6,12 +6,13 @@
 
 #define MAXSIZE 100
 #define BANLIMIT 100
-#define NELEMS(x)  ((sizeof(x) / sizeof((x)[0]))/2) // IF THINGS BREAK LOOK HERE /2 is VERY HACKY//
+#define NELEMS(x)  ((sizeof(x) / sizeof((x)[0]))/2)
 #define BUFSIZE 100
+#define NEWLINE_ENC_CODE 4
 
 void copy(char to[], char from[]);
 void pt_define_noise(char *string[]);
-void build_word(char* pointer_to_word, char initialchar);
+int build_word(char* pointer_to_word, char initialchar);
 bool is_noise(char *string, char *noise_array[]);
 struct tnode *traverse_file(char *noise_words[]);
 void print_word_tree(struct tnode *ptr);
@@ -89,7 +90,8 @@ struct tnode *register_word(struct tnode *ptr, char *string, int linenum)
 
     return ptr;
 }
-
+/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+/* --- --- --- --- --- --- --- --- --- --- MAIN --- --- --- --- --- --- --- --- --- --- --- --- */
 int main(int argc, char const *argv[])
 {
     char *word_array[MAXSIZE];
@@ -108,12 +110,12 @@ int main(int argc, char const *argv[])
 
     return 0;
 }
+/* --- --- --- --- --- --- --- --- --- --- MAIN --- --- --- --- --- --- --- --- --- --- --- --- */
+/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 void pt_define_noise(char *string[]) // input comes in through command line, ends up in an array of pointers to strings
 {
-    printf("Define noise words, capitalization is irrelevant (input as alphanumeric words separated by blanks):\n");
-// - input comes in through console as words separated by spaces
-//   - iterate through input one character at a time
+    printf("Define noise words, capitalization is relevant (input as alphanumeric words separated by blanks):\n");
     int c = ' ';
     int banned_count = 0;
     size_t word_size = (sizeof(char) * MAXSIZE);
@@ -151,9 +153,13 @@ struct tnode *traverse_file(char *noise_words[])
 
         if (isalnum(c)) {
             char word[MAXSIZE];
-            build_word(word, c);
+            int nl = build_word(word, c);
             if (!is_noise(word, noise_words)) {
                 root = register_word(root, word, linenum);
+            }
+
+            if (nl == NEWLINE_ENC_CODE) {
+                linenum++;
             }
         }  
         c = getch();
@@ -180,15 +186,25 @@ bool is_noise(char *string, char *noise_words[])
 takes in the first character of a string, builds a chararray until it hits a blank, appends a null char,
 returns a pointer to a chararray containing the word 
 */
-void build_word(char ptr_to_word[MAXSIZE], char initialchar) 
+int build_word(char ptr_to_word[MAXSIZE], char initialchar) 
 {
+    bool newline_found = false;
     for (int i = 0; isalnum(initialchar); i++) {
         ptr_to_word[i] = initialchar;
         initialchar = getchar();
         if (!isalnum(initialchar)) {
+            if (initialchar == '\n') {
+                newline_found = true;
+            }
             ptr_to_word[i+1] = '\0';
         }
     }
+
+    if (newline_found) {
+        return NEWLINE_ENC_CODE;
+    }
+
+    return 0;
 }
 
 void print_word_tree(struct tnode *ptr)
