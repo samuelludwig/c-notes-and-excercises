@@ -14,9 +14,11 @@ int x = 5;
 ```C
 int *num;
 ```
+
 - creates a pointer to an integer, called `num`, explicitly telling the computer "this variable will hold an address to an integer"
 
 - lets assume that the value of `num` is to be stored in memory address 12008 
+
 ***
 
 **NOW**
@@ -24,6 +26,7 @@ int *num;
 ```C
 num = &x;
 ```
+
 - sets the value of `num` to the address of `x`
 
 - the address of `x` is 1004,
@@ -31,6 +34,7 @@ num = &x;
 - so, the value stored in `num` is 1004,
 
 - *so,* the value stored in the address of `num`; 12008, is **1004**
+
 ***
 
 **SO**
@@ -56,8 +60,9 @@ num = &x;
 ```C
 char chararray[64];
 ```
+
 - ^this^ initializes an array of characters, 64 spaces wide, each element is currently just garbage data until changed
- 
+
 - more explicitly, this tells the computer "clear out a block of memory 64 places wide, I'm going to put an array there, and I will use `chararray` to refer to the address of the first element in that array"
 
 - assume that the first byte of the character array is located at memory address 4000 
@@ -71,9 +76,10 @@ char chararray[64];
 ***
 
 **NOTE**
+
 - `chararray` and `&chararray[0]` are effectively equivalent when referenced, **however**, keep in mind:
 
--  `chararray` is **not** a variable, and it **cannot** be treated or referenced as one; `(chararray += 10);` will do nothing but cause error marks to appear in your IDE 
+- `chararray` is **not** a variable, and it **cannot** be treated or referenced as one; `(chararray += 10);` will do nothing but cause error marks to appear in your IDE 
 
 - `chararray` is **not** a variable, it is also **not** a pointer, `chararray` **is** a **lable** that we can use to reference the address of it's first element
 
@@ -86,6 +92,7 @@ char chararray[64];
 ***
 
 ## String Arrays and Pointer Arrays
+
 ***
 
 - we know how to make a string, and that a string is just a character array
@@ -141,10 +148,10 @@ char mystring[64];
 
 - we can reference `&mystring` to get the address of this string (the first element of the character array)
 
-
 ```C
 char *mystringarray[8];
 ```
+
 - creates an empty array of **character pointers**, 8 spaces wide, assume the first space of this array is located at memory address **7004**
 
 - in each space of this array, we can store a pointer to another character **or character array**
@@ -176,6 +183,7 @@ mystringarray[0] = mystring;
 ```C
 int x = 5;
 ```
+
 - creates variable `x` and sets it equal to 5, assume `x`'s address is 5000
 
 - the value of 5 is now stored in memory address 5000
@@ -183,21 +191,23 @@ int x = 5;
 ```C
 int *mypointer = &x;
 ```
+
 - creates a pointer variable `mypointer` and sets it equal to `x`'s address, 5000, assume `mypointer`'s address is 7000
 
 - the value of `x`'s address in memory, 5000, is now stored in the address of `mypointer`, 7000
+
 ***
 
 **SO**
-- if I reference '`mypointer`',
-I am referencing the value stored in `mypointer`'s address, which is `x`'s address, **5000**
 
-- if I reference '`&mypointer`',
-I am referencing the value of `mypointer`'s address, which is **7000** 
+- if I reference '`mypointer`', I am referencing the value stored in `mypointer`'s address, which is `x`'s address, **5000**
 
-- if I reference '`*mypointer`',
-I am referencing the value that `mypointer` is pointing to, which is the value at `x`'s address, **5**
+- if I reference '`&mypointer`', I am referencing the value of `mypointer`'s address, which is **7000** 
+
+- if I reference '`*mypointer`', I am referencing the value that `mypointer` is pointing to, which is the value at `x`'s address, **5**
+
 ***
+
 **NOW**
 
 ```C
@@ -211,23 +221,21 @@ int **doublepointer = &mypointer;
 - the value of `mypointer`'s address, 7000, is now stored in the address of `doublepointer`, 14000
 
 - the two asterisks "**", in front of the variable indicate to the computer that "this variable is going to be a pointer to another pointer"
+
 ***
 
 **SO**
 
-- if I reference '`doublepointer`',
-I am referencing the value stored in `doublepointer`'s address, which is `mypointer`'s address, **7000**
+- if I reference '`doublepointer`', I am referencing the value stored in `doublepointer`'s address, which is `mypointer`'s address, **7000**
 
-- if I reference '`&doublepointer`',
-I am referencing the value of `doublepointer`'s address, which is **14000** 
+- if I reference '`&doublepointer`', I am referencing the value of `doublepointer`'s address, which is **14000**
 
-- if I reference '`*doublepointer`',
-I am referencing the value that `doublepointer` is pointing to, which is the value stored at `mypointer`'s address, **5000**
+- if I reference '`*doublepointer`', I am referencing the value that `doublepointer` is pointing to, which is the value stored at `mypointer`'s address, **5000**
 
-- if I reference '`**doublepointer`',
-I am referencing the value that `mypointer` is pointing to, which is the value stored in `x`'s address, **5**
+- if I reference '`**doublepointer`', I am referencing the value that `mypointer` is pointing to, which is the value stored in `x`'s address, **5**
 
 ***
+
 **NOTE**
 
 - when I reference something using two asterisks, I am telling the computer "look at this thing that I am pointing to, now give me the value that *that* thing is pointing to"
@@ -239,5 +247,4 @@ I am referencing the value that `mypointer` is pointing to, which is the value s
 
 ## Further Reading
 
-- for further information on pointers and their usecases, see link: http://www.eskimo.com/~scs/cclass/int/sx8.html 
-
+- for further information on pointers and their usecases, see link: http://www.eskimo.com/~scs/cclass/int/sx8.html
