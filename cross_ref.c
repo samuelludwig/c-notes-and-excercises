@@ -8,7 +8,6 @@
 #define BANLIMIT 100
 #define NELEMS(x)  ((sizeof(x) / sizeof((x)[0]))/2)
 #define BUFSIZE 100
-#define NEWLINE_ENC_CODE 4
 
 void copy(char to[], char from[]);
 void pt_define_noise(char *string[]);
@@ -158,7 +157,7 @@ struct tnode *traverse_file(char *noise_words[])
                 root = register_word(root, word, linenum);
             }
 
-            if (nl == NEWLINE_ENC_CODE) {
+            if (nl == '\n') {
                 linenum++;
             }
         }  
@@ -183,8 +182,8 @@ bool is_noise(char *string, char *noise_words[])
 }
 
 /* 
-takes in the first character of a string, builds a chararray until it hits a blank, appends a null char,
-returns a pointer to a chararray containing the word 
+takes in the first character of a string, builds a chararray until it hits a blank, appends a null char, 
+returns the last character encountered 
 */
 int build_word(char ptr_to_word[MAXSIZE], char initialchar) 
 {
@@ -193,18 +192,11 @@ int build_word(char ptr_to_word[MAXSIZE], char initialchar)
         ptr_to_word[i] = initialchar;
         initialchar = getchar();
         if (!isalnum(initialchar)) {
-            if (initialchar == '\n') {
-                newline_found = true;
-            }
             ptr_to_word[i+1] = '\0';
         }
     }
 
-    if (newline_found) {
-        return NEWLINE_ENC_CODE;
-    }
-
-    return 0;
+    return initialchar;
 }
 
 void print_word_tree(struct tnode *ptr)
